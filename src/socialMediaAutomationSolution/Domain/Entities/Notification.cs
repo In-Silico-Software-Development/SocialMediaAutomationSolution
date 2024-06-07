@@ -12,8 +12,8 @@ public class Notification : Entity<Guid>
     public Notification()
     {
         IsRead = false;
-
     }
+
     public Guid UserId { get; set; }
     public User User { get; set; }
     public string Message { get; set; }

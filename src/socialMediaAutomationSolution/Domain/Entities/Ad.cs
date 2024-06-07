@@ -14,5 +14,5 @@ public class Ad : Entity<Guid>
     public bool IsPublished { get; set; }
     public Guid CampaignGuid { get; set; }
     public Campaign Campaign { get; set; }
-    public ICollection<AdPerformance> Performances { get; set; }
+    public ICollection<AdPerformance> Performances { get; set; } = new List<AdPerformance>();
 }

@@ -16,6 +16,6 @@ public class Campaign : Entity<Guid>
     public decimal Budget { get; set; }
     public Guid UserGuid { get; set; }
     public User User { get; set; }
-    public ICollection<Ad> Ads { get; set; }
+    public ICollection<Ad> Ads { get; set; } = new List<Ad>();
 }
 

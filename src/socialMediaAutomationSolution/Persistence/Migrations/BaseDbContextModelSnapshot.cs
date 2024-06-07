@@ -151,38 +151,31 @@ namespace Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ActivationKey")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ActivationKey");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsVerified")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsVerified");
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UserId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("EmailAuthenticators", (string)null);
+                    b.ToTable("EmailAuthenticators");
                 });
 
             modelBuilder.Entity("Domain.Entities.Notification", b =>
@@ -221,270 +214,106 @@ namespace Persistence.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("OperationClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Auth.Admin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Auth.Read"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Auth.Write"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Auth.RevokeToken"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Admin"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Read"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Write"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Create"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Update"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "OperationClaims.Delete"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Admin"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Read"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Write"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Create"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Update"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "UserOperationClaims.Delete"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Admin"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Read"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Write"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Create"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Update"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Users.Delete"
-                        });
+                    b.ToTable("OperationClaims");
                 });
 
             modelBuilder.Entity("Domain.Entities.OtpAuthenticator", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsVerified")
-                        .HasColumnType("bit")
-                        .HasColumnName("IsVerified");
+                        .HasColumnType("bit");
 
                     b.Property<byte[]>("SecretKey")
                         .IsRequired()
-                        .HasColumnType("varbinary(max)")
-                        .HasColumnName("SecretKey");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UserId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OtpAuthenticators", (string)null);
+                    b.ToTable("OtpAuthenticators");
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedByIp")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("CreatedByIp");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ExpirationDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("ExpiresDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ReasonRevoked")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ReasonRevoked");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ReplacedByToken")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("ReplacedByToken");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RevokedByIp")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("RevokedByIp");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RevokedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("RevokedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Token")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Token");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UserId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens", (string)null);
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Domain.Entities.SocialMediaAccount", b =>
@@ -528,105 +357,6 @@ namespace Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<int>("AuthenticatorType")
-                        .HasColumnType("int")
-                        .HasColumnName("AuthenticatorType");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Email");
-
-                    b.Property<byte[]>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)")
-                        .HasColumnName("PasswordHash");
-
-                    b.Property<byte[]>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)")
-                        .HasColumnName("PasswordSalt");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("30b30331-92fc-4f82-900f-23137fa9358e"),
-                            AuthenticatorType = 0,
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 53, 106, 36, 99, 16, 44, 238, 57, 168, 128, 139, 96, 127, 185, 97, 33, 55, 184, 82, 223, 158, 171, 111, 243, 111, 18, 187, 131, 218, 225, 158, 201, 237, 115, 195, 91, 189, 224, 32, 155, 167, 223, 21, 74, 54, 65, 255, 59, 165, 28, 56, 60, 55, 122, 166, 145, 175, 192, 237, 118, 253, 160, 43, 39 },
-                            PasswordSalt = new byte[] { 3, 38, 46, 66, 102, 177, 175, 44, 132, 252, 93, 232, 115, 182, 106, 159, 158, 161, 110, 197, 50, 243, 147, 24, 61, 2, 93, 48, 242, 134, 101, 219, 38, 234, 215, 148, 177, 107, 177, 99, 43, 207, 162, 120, 222, 162, 6, 41, 121, 105, 39, 122, 201, 236, 88, 18, 60, 60, 233, 114, 74, 109, 22, 1, 233, 101, 249, 165, 226, 131, 228, 114, 81, 13, 115, 37, 142, 161, 116, 34, 249, 77, 156, 140, 105, 238, 49, 232, 117, 150, 184, 48, 177, 24, 37, 144, 21, 112, 111, 98, 57, 20, 22, 79, 27, 138, 195, 72, 180, 1, 104, 88, 76, 251, 205, 73, 75, 215, 87, 156, 31, 225, 141, 6, 20, 105, 126, 189 }
-                        });
-                });
-
-            modelBuilder.Entity("Domain.Entities.UserOperationClaim", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
-
-                    b.Property<int>("OperationClaimId")
-                        .HasColumnType("int")
-                        .HasColumnName("OperationClaimId");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OperationClaimId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserOperationClaims", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4efc3cc6-f423-4798-b23e-6e8404e30785"),
-                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            OperationClaimId = 1,
-                            UserId = new Guid("30b30331-92fc-4f82-900f-23137fa9358e")
-                        });
-                });
-
-            modelBuilder.Entity("NArchitecture.Core.Security.Entities.User<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AuthenticatorType")
@@ -658,7 +388,37 @@ namespace Persistence.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("User<Guid>");
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Domain.Entities.UserOperationClaim", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("OperationClaimId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OperationClaimId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserOperationClaims");
                 });
 
             modelBuilder.Entity("Domain.Entities.Ad", b =>

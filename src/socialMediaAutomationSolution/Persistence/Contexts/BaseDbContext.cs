@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -30,9 +30,9 @@ public class BaseDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        base.OnModelCreating(modelBuilder);
 
-       modelBuilder.Entity<Campaign>()
+        modelBuilder.Entity<Campaign>()
             .HasOne(c => c.User)
             .WithMany()
             .HasForeignKey(c => c.UserGuid)
@@ -72,7 +72,7 @@ public class BaseDbContext : DbContext
             .HasColumnType("decimal(18,2)");
 
         // Indexes
-        modelBuilder.Entity<User<Guid>>()
+        modelBuilder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();
 
