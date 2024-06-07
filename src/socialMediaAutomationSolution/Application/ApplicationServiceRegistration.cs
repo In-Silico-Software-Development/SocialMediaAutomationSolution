@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -20,6 +20,10 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.Ads;
+using Application.Services.AdPerformances;
+using Application.Services.Notifications;
+using Application.Services.SocialMediaAccounts;
 
 namespace Application;
 
@@ -61,6 +65,14 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
+        services.AddScoped<IAdService, AdManager>();
+        services.AddScoped<IAdPerformanceService, AdPerformanceManager>();
+        services.AddScoped<INotificationService, NotificationManager>();
+        services.AddScoped<ISocialMediaAccountService, SocialMediaAccountManager>();
+        services.AddScoped<IAdService, AdManager>();
+        services.AddScoped<IAdPerformanceService, AdPerformanceManager>();
+        services.AddScoped<INotificationService, NotificationManager>();
+        services.AddScoped<ISocialMediaAccountService, SocialMediaAccountManager>();
         return services;
     }
 
