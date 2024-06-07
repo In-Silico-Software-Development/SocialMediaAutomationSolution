@@ -22,6 +22,131 @@ namespace Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entities.Ad", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Platform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ScheduledTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignGuid");
+
+                    b.HasIndex("ScheduledTime");
+
+                    b.ToTable("Ads");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AdPerformance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AdGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Clicks")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Conversions")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Cost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Impressions")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdGuid");
+
+                    b.HasIndex("Date");
+
+                    b.ToTable("AdPerformances");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Campaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Budget")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserGuid")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserGuid");
+
+                    b.ToTable("Campaigns");
+                });
+
             modelBuilder.Entity("Domain.Entities.EmailAuthenticator", b =>
                 {
                     b.Property<Guid>("Id")
@@ -58,6 +183,38 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("EmailAuthenticators", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Domain.Entities.OperationClaim", b =>
@@ -330,6 +487,43 @@ namespace Persistence.Migrations
                     b.ToTable("RefreshTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entities.SocialMediaAccount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AccessToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AccountName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Platform")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SocialMediaAccounts");
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -375,12 +569,12 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("b36483de-70cc-42b7-8005-0ffaafde7ead"),
+                            Id = new Guid("30b30331-92fc-4f82-900f-23137fa9358e"),
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 38, 45, 13, 139, 40, 104, 45, 255, 139, 68, 127, 12, 89, 158, 9, 92, 129, 77, 92, 171, 186, 78, 86, 205, 209, 153, 8, 87, 25, 42, 172, 84, 172, 165, 121, 46, 37, 80, 242, 208, 115, 45, 5, 95, 163, 51, 169, 17, 110, 124, 234, 233, 112, 237, 33, 188, 17, 84, 54, 179, 197, 202, 208, 44 },
-                            PasswordSalt = new byte[] { 248, 158, 217, 213, 156, 1, 157, 75, 20, 165, 142, 250, 166, 215, 25, 108, 163, 158, 38, 151, 55, 157, 107, 36, 243, 163, 184, 73, 210, 198, 172, 37, 152, 234, 219, 123, 246, 194, 244, 93, 239, 70, 1, 161, 250, 102, 211, 217, 102, 145, 14, 236, 148, 90, 107, 46, 97, 179, 54, 22, 46, 36, 121, 92, 166, 36, 235, 94, 171, 9, 126, 50, 97, 226, 153, 194, 237, 4, 117, 219, 212, 105, 131, 194, 64, 234, 226, 207, 232, 75, 10, 41, 0, 37, 148, 111, 24, 81, 142, 115, 160, 95, 63, 70, 5, 153, 136, 109, 125, 11, 238, 63, 198, 229, 88, 15, 30, 206, 35, 174, 47, 189, 105, 229, 253, 146, 170, 35 }
+                            PasswordHash = new byte[] { 53, 106, 36, 99, 16, 44, 238, 57, 168, 128, 139, 96, 127, 185, 97, 33, 55, 184, 82, 223, 158, 171, 111, 243, 111, 18, 187, 131, 218, 225, 158, 201, 237, 115, 195, 91, 189, 224, 32, 155, 167, 223, 21, 74, 54, 65, 255, 59, 165, 28, 56, 60, 55, 122, 166, 145, 175, 192, 237, 118, 253, 160, 43, 39 },
+                            PasswordSalt = new byte[] { 3, 38, 46, 66, 102, 177, 175, 44, 132, 252, 93, 232, 115, 182, 106, 159, 158, 161, 110, 197, 50, 243, 147, 24, 61, 2, 93, 48, 242, 134, 101, 219, 38, 234, 215, 148, 177, 107, 177, 99, 43, 207, 162, 120, 222, 162, 6, 41, 121, 105, 39, 122, 201, 236, 88, 18, 60, 60, 233, 114, 74, 109, 22, 1, 233, 101, 249, 165, 226, 131, 228, 114, 81, 13, 115, 37, 142, 161, 116, 34, 249, 77, 156, 140, 105, 238, 49, 232, 117, 150, 184, 48, 177, 24, 37, 144, 21, 112, 111, 98, 57, 20, 22, 79, 27, 138, 195, 72, 180, 1, 104, 88, 76, 251, 205, 73, 75, 215, 87, 156, 31, 225, 141, 6, 20, 105, 126, 189 }
                         });
                 });
 
@@ -422,17 +616,99 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0411901c-2a11-4c0c-a717-deb1aee611c8"),
+                            Id = new Guid("4efc3cc6-f423-4798-b23e-6e8404e30785"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("b36483de-70cc-42b7-8005-0ffaafde7ead")
+                            UserId = new Guid("30b30331-92fc-4f82-900f-23137fa9358e")
                         });
+                });
+
+            modelBuilder.Entity("NArchitecture.Core.Security.Entities.User<System.Guid>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("AuthenticatorType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<byte[]>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<byte[]>("PasswordSalt")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("User<Guid>");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Ad", b =>
+                {
+                    b.HasOne("Domain.Entities.Campaign", "Campaign")
+                        .WithMany("Ads")
+                        .HasForeignKey("CampaignGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+                });
+
+            modelBuilder.Entity("Domain.Entities.AdPerformance", b =>
+                {
+                    b.HasOne("Domain.Entities.Ad", "Ad")
+                        .WithMany("Performances")
+                        .HasForeignKey("AdGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Ad");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Campaign", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserGuid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Entities.EmailAuthenticator", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
                         .WithMany("EmailAuthenticators")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Notification", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -462,6 +738,17 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.SocialMediaAccount", b =>
+                {
+                    b.HasOne("Domain.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Entities.UserOperationClaim", b =>
                 {
                     b.HasOne("Domain.Entities.OperationClaim", "OperationClaim")
@@ -479,6 +766,16 @@ namespace Persistence.Migrations
                     b.Navigation("OperationClaim");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Ad", b =>
+                {
+                    b.Navigation("Performances");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Campaign", b =>
+                {
+                    b.Navigation("Ads");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

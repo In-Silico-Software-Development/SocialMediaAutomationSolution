@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,24 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User<Guid>",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    AuthenticatorType = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User<Guid>", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -45,6 +63,32 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Campaigns",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Budget = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UserGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Campaigns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Campaigns_Users_UserGuid",
+                        column: x => x.UserGuid,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,6 +108,29 @@ namespace Persistence.Migrations
                     table.PrimaryKey("PK_EmailAuthenticators", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EmailAuthenticators_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -122,6 +189,30 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SocialMediaAccounts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Platform = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccessToken = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AccountName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SocialMediaAccounts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SocialMediaAccounts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserOperationClaims",
                 columns: table => new
                 {
@@ -145,6 +236,57 @@ namespace Persistence.Migrations
                         name: "FK_UserOperationClaims_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ads",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Platform = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ScheduledTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsPublished = table.Column<bool>(type: "bit", nullable: false),
+                    CampaignGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ads", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ads_Campaigns_CampaignGuid",
+                        column: x => x.CampaignGuid,
+                        principalTable: "Campaigns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AdPerformances",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AdGuid = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Impressions = table.Column<int>(type: "int", nullable: false),
+                    Clicks = table.Column<int>(type: "int", nullable: false),
+                    Conversions = table.Column<int>(type: "int", nullable: false),
+                    Cost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AdPerformances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AdPerformances_Ads_AdGuid",
+                        column: x => x.AdGuid,
+                        principalTable: "Ads",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -182,16 +324,46 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate" },
-                values: new object[] { new Guid("b36483de-70cc-42b7-8005-0ffaafde7ead"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 38, 45, 13, 139, 40, 104, 45, 255, 139, 68, 127, 12, 89, 158, 9, 92, 129, 77, 92, 171, 186, 78, 86, 205, 209, 153, 8, 87, 25, 42, 172, 84, 172, 165, 121, 46, 37, 80, 242, 208, 115, 45, 5, 95, 163, 51, 169, 17, 110, 124, 234, 233, 112, 237, 33, 188, 17, 84, 54, 179, 197, 202, 208, 44 }, new byte[] { 248, 158, 217, 213, 156, 1, 157, 75, 20, 165, 142, 250, 166, 215, 25, 108, 163, 158, 38, 151, 55, 157, 107, 36, 243, 163, 184, 73, 210, 198, 172, 37, 152, 234, 219, 123, 246, 194, 244, 93, 239, 70, 1, 161, 250, 102, 211, 217, 102, 145, 14, 236, 148, 90, 107, 46, 97, 179, 54, 22, 46, 36, 121, 92, 166, 36, 235, 94, 171, 9, 126, 50, 97, 226, 153, 194, 237, 4, 117, 219, 212, 105, 131, 194, 64, 234, 226, 207, 232, 75, 10, 41, 0, 37, 148, 111, 24, 81, 142, 115, 160, 95, 63, 70, 5, 153, 136, 109, 125, 11, 238, 63, 198, 229, 88, 15, 30, 206, 35, 174, 47, 189, 105, 229, 253, 146, 170, 35 }, null });
+                values: new object[] { new Guid("30b30331-92fc-4f82-900f-23137fa9358e"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 53, 106, 36, 99, 16, 44, 238, 57, 168, 128, 139, 96, 127, 185, 97, 33, 55, 184, 82, 223, 158, 171, 111, 243, 111, 18, 187, 131, 218, 225, 158, 201, 237, 115, 195, 91, 189, 224, 32, 155, 167, 223, 21, 74, 54, 65, 255, 59, 165, 28, 56, 60, 55, 122, 166, 145, 175, 192, 237, 118, 253, 160, 43, 39 }, new byte[] { 3, 38, 46, 66, 102, 177, 175, 44, 132, 252, 93, 232, 115, 182, 106, 159, 158, 161, 110, 197, 50, 243, 147, 24, 61, 2, 93, 48, 242, 134, 101, 219, 38, 234, 215, 148, 177, 107, 177, 99, 43, 207, 162, 120, 222, 162, 6, 41, 121, 105, 39, 122, 201, 236, 88, 18, 60, 60, 233, 114, 74, 109, 22, 1, 233, 101, 249, 165, 226, 131, 228, 114, 81, 13, 115, 37, 142, 161, 116, 34, 249, 77, 156, 140, 105, 238, 49, 232, 117, 150, 184, 48, 177, 24, 37, 144, 21, 112, 111, 98, 57, 20, 22, 79, 27, 138, 195, 72, 180, 1, 104, 88, 76, 251, 205, 73, 75, 215, 87, 156, 31, 225, 141, 6, 20, 105, 126, 189 }, null });
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("0411901c-2a11-4c0c-a717-deb1aee611c8"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("b36483de-70cc-42b7-8005-0ffaafde7ead") });
+                values: new object[] { new Guid("4efc3cc6-f423-4798-b23e-6e8404e30785"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("30b30331-92fc-4f82-900f-23137fa9358e") });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdPerformances_AdGuid",
+                table: "AdPerformances",
+                column: "AdGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AdPerformances_Date",
+                table: "AdPerformances",
+                column: "Date");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ads_CampaignGuid",
+                table: "Ads",
+                column: "CampaignGuid");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ads_ScheduledTime",
+                table: "Ads",
+                column: "ScheduledTime");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Campaigns_UserGuid",
+                table: "Campaigns",
+                column: "UserGuid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EmailAuthenticators_UserId",
                 table: "EmailAuthenticators",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Notifications_UserId",
+                table: "Notifications",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -203,6 +375,17 @@ namespace Persistence.Migrations
                 name: "IX_RefreshTokens_UserId",
                 table: "RefreshTokens",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SocialMediaAccounts_UserId",
+                table: "SocialMediaAccounts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User<Guid>_Email",
+                table: "User<Guid>",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserOperationClaims_OperationClaimId",
@@ -219,7 +402,13 @@ namespace Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "AdPerformances");
+
+            migrationBuilder.DropTable(
                 name: "EmailAuthenticators");
+
+            migrationBuilder.DropTable(
+                name: "Notifications");
 
             migrationBuilder.DropTable(
                 name: "OtpAuthenticators");
@@ -228,10 +417,22 @@ namespace Persistence.Migrations
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
+                name: "SocialMediaAccounts");
+
+            migrationBuilder.DropTable(
+                name: "User<Guid>");
+
+            migrationBuilder.DropTable(
                 name: "UserOperationClaims");
 
             migrationBuilder.DropTable(
+                name: "Ads");
+
+            migrationBuilder.DropTable(
                 name: "OperationClaims");
+
+            migrationBuilder.DropTable(
+                name: "Campaigns");
 
             migrationBuilder.DropTable(
                 name: "Users");
